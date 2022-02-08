@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    <div th:replace="~{fragments/header::header}"></div>
+    <h1 th:text="${'Definition of: ' + card.name}" class="mt-4"></h1>
+    <div class="row row-cols-auto mt-5 mb-5">
+        <div class="card-body w-50 mx-auto">
+            <p th:text="${'Card ID is: ' + card.id}" class="card-title ">VALUE</p>
+            <p th:text="${'Card name is: ' + card.name}" class="card-title font-weight-bolder">VALUE</p>
+            <p th:text="${'Card Definition is: ' +card.definition}" class="card-title">VALUE</p>
+            <p th:text="${'Card Level is: ' +card.level}" class="card-title">Level</p>
+            <a th:href="@{/card/{id}/updateInfo(id=${card.getId()})}" class="btn btn-primary mb-2 mt-3">Edit</a>
+            <br><br>
+            <a sec:authorize="hasAnyRole('ADMIN','MANAGER')" th:href="@{/card/{id}/delete/(id=${card.getId()})}"
+               class="btn btn-primary mb-2">Delete</a>
+            <a th:href="@{/card/{id}/disable/(id=${card.getId()})}" class="btn btn-primary mb-2">Done</a>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

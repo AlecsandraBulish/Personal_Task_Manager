@@ -1,0 +1,42 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <title>Good Thymes Virtual Grocery</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+</head>
+
+<body>
+<div class="container">
+  <div th:replace="~{fragments/header::header}"></div>
+
+  <h1>Task List</h1>
+
+
+  <div class="container">
+    <!--        <a class="nav-link" th:href="@{/new/{id}(id=${user.getId()})}" class="btn btn-primary mb-2">show cards</a>-->
+    <div class="row row-cols-auto mt-5 mb-5">
+      <!--            <div th:text="${user.username}" class="card col me-2" style="width: 18rem;">-->
+      <div th:unless="${cards.isEmpty()}" th:each="card : ${cards}" class="card" style="width: 18rem;">
+        <div class="card-body">
+          <div th:each="user : ${card.getUsers()}">
+            <h3 th:text="${user.getUsername()}" class="card-title">Username</h3>
+          </div>
+          <h5 th:text="${card.name}" class="card-title">Card title</h5>
+          <p th:text="${card.getDefinition()}" class="mb-5">card definition</p>
+          <p th:text="${card.getSummary_time()}" class="mb-5">card time</p>
+          <a th:href="@{/card/{id}(id=${card.getId()})}" class="btn btn-primary mb-2">More info</a>
+        </div>
+      </div>
+      <div th:if="${cards.isEmpty()}">
+        <h3 th:text="${'No Data'}">No Data</h3>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

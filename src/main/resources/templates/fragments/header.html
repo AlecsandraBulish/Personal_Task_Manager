@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header">
+    <a class="navbar-brand" href="#" > Personal Task_Manager</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link"   sec:authorize="isAuthenticated()" th:href="@{/card/new}" >Create a card</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="hasAnyRole('ADMIN','MANAGER')" th:href="@{/card/list}" >Cards List</a>
+            </li>
+            <li>
+                <a class="nav-link" sec:authorize="hasAnyRole('ADMIN','MANAGER')" th:href="@{/card/completed}" >Completed Cards List</a>
+
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="hasAnyRole('USER')" th:href="@{/user/main}" >My page</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="hasAnyRole('ADMIN','MANAGER')" th:href="@{/user/new}" >Create a User</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="hasAnyRole('ADMIN','MANAGER')" th:href="@{/user/list}" >Users List</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/login}" sec:authorize="isAnonymous()" class="btn btn-primary me-2">Войти</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/user/registration}" sec:authorize="isAnonymous()" class="btn btn-success me-2">Registration</a>
+            </li>
+            <li>
+                <form sec:authorize="isAuthenticated()"
+                      th:action="@{/logout}" th:method="post"
+                      class="form-inline my-2 my-lg-0" >
+                    <button class="btn btn-outline-success my-2 my-sm-0">
+                        Logout <span sec:authentication="principal.username"></span>
+                    </button>
+                </form>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+</html>

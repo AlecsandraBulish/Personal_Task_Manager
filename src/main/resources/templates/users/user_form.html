@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    <div th:replace="~{fragments/header::header}"></div>
+    <div class="row py-2">
+        <div class="col-12">
+
+            <form th:action="@{/user}" method="post" th:object="${user}">
+                <input type="hidden" id="id" th:field="*{id}">
+                <div class="form-group row">
+                    <div class="form-input mt-2">
+                        <i class="fa fa-envelope"></i>
+                        <input th:field="*{email}" type="email" class="form-control" placeholder="Email">
+                        <small th:if="${#fields.hasErrors('email')}"
+                               th:errors="*{email}">Coast ERROR</small>
+                    </div>
+                    <div class="form-input mt-2">
+                        <i class="fa fa-user"></i>
+                        <input th:field="*{username}" type="text" class="form-control" placeholder="Login">
+                        <small th:if="${#fields.hasErrors('username')}"
+                               th:errors="*{username}">Username ERROR</small>
+                    </div>
+                    <div class="form-input mt-2">
+                        <i class="fa fa-lock"></i>
+                        <input th:field="*{password}" type="password" class="form-control" placeholder="Password">
+                        <small th:if="${#fields.hasErrors('password')}"
+                               th:errors="*{password}">Password ERROR</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="roles">Roles</label>
+                        <select multiple class="form-control" id="roles" th:field="*{roles}" required>
+                            <option th:each="role : ${roles}"
+                                    th:text="${role.name}"
+                                    th:value="${role.id}"
+                                    th:selected="${user.roles?.contains(role)}"></option>
+                        </select>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary mt-4 signup">Create a user</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

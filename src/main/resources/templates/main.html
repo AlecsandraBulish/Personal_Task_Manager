@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Good Thymes Virtual Grocery</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+</head>
+
+<body>
+<div class="container">
+    <div th:replace="~{fragments/header::header}"></div>
+
+    <h1>Task List</h1>
+
+<!--<h5 sec:authorize="isAuthenticated()" th:text="${user.getUsername() + ' Welcom'}">Welcome</h5>-->
+<br>
+    <a th:if="${user != null}" sec:authorize="isAuthenticated()" th:href="@{/user/{id}/cards(id=${user.getId()})}" class="btn btn-primary mb-2">My Task List</a>
+
+
+</div>
+</body>
+
+</html>
