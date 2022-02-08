@@ -1,6 +1,9 @@
 package ru.bulish.personal_task_manager.controller;
 
 
+import lombok.extern.log4j.Log4j2;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.access.annotation.Secured;
@@ -23,10 +26,12 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 
-
+@Log4j2
 @Controller
 @RequestMapping("/card")
 public class CardController {
+
+    Logger logger = LogManager.getLogger(UserController.class);
 
     @Autowired
     private CardService cardService;
@@ -40,12 +45,10 @@ public class CardController {
         if (card == null) {
             throw new NoSuchElementException ("There is no such product in Database");
         }
+        logger.info("Getting the card by id: " + id);
          model.addAttribute("card", card);
         return "cards/card";
     }
-
-
-
     @GetMapping("/list")
     public String showAllCards(Model model) {
         List<Card> cards = cardService.getAllCards();
@@ -91,6 +94,7 @@ public class CardController {
         if (card.getUsers() == null){
             card.addUser(user);
         }
+        logger.info("creating a new card ");
         cardService.saveOrUpdate(card);
         return "redirect:/user/main";
     }
@@ -109,12 +113,14 @@ public class CardController {
     @RequestMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         cardService.deleteById(id);
+        logger.info("Card with id: " + id + " was deleted");
         return "redirect:/user/main";
     }
     @RequestMapping("/{id}/disable")
     public String makeDisable(@PathVariable("id") Long id) {
         Card card = cardService.getCardById(id);
          cardService.findTimeDifference(card);
+        logger.info("Card with id: " + id + " was disabled");
 
         return "redirect:/user/main";
     }
